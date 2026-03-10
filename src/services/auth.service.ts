@@ -24,9 +24,9 @@ export const authService = {
       password: hashed,
     });
 
-    const { password: userPassword, ...userInfo } = user;
+    const { password: _, ...userInfo } = user;
 
-    const token = generateToken(user.id);
+    const token = generateToken(user.id, user.role);
 
     return { userInfo, token };
   },
@@ -44,9 +44,9 @@ export const authService = {
       throw new Error("Invalid credentials");
     }
 
-    const token = generateToken(user.id);
+    const token = generateToken(user.id, user.role);
 
-    const { password: userPassword, ...userInfo } = user;
+    const { password: _, ...userInfo } = user;
 
     return { userInfo, token };
   },

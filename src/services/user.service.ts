@@ -1,9 +1,12 @@
 import { userRepository } from "@/repositories/user.repository";
 
 export const userService = {
-  async getAll() {
-    const users = await userRepository.findAll();
+  async getAll(role: string) {
+    if (role === "USER") {
+      throw new Error("Forbidden: You don't have access for users");
+    }
 
+    const users = await userRepository.findAll();
     return users;
   },
 

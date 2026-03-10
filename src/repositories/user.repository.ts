@@ -18,11 +18,8 @@ export const userRepository = {
 
   findAll() {
     return prisma.user.findMany({
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        surname: true,
+      omit: {
+        password: true,
       },
     });
   },
@@ -30,11 +27,8 @@ export const userRepository = {
   findById(id: number) {
     return prisma.user.findUnique({
       where: { id },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        surname: true,
+      omit: {
+        password: true,
       },
     });
   },

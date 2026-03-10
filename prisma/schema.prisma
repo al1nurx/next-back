@@ -7,19 +7,38 @@ datasource db {
     provider = "postgresql"
 }
 
-model User {
-    id       Int    @id @default(autoincrement())
-    name     String
-    surname  String
-    email    String @unique
-    password String
+enum ROLE {
+    USER
+    ADMIN
+    MANAGER
 }
 
-model Book {
+enum STATUS {
+    PENDING
+    APPROVED
+    REJECTED
+    CANCELLED
+}
+
+model User {
+    id       Int       @id @default(autoincrement())
+    name     String
+    surname  String
+    email    String    @unique
+    password String
+    role     ROLE      @default(USER)
+    bookings Booking[]
+}
+
+model Booking {
     id        Int      @id @default(autoincrement())
-    title     String
-    author    String
-    published DateTime
+    spaceId   String
+    purpose   String
+    startTime DateTime
+    endTime   DateTime
+    status    STATUS   @default(PENDING)
+    userId    Int
+    user      User     @relation(fields: [userId], references: [id])
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
